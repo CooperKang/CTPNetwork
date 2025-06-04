@@ -19,7 +19,7 @@ const LoadingText = styled.div`
 
 const CompoundViewer = ({ compoundId }) => {
 	// 실제 구현에서는 compoundId를 기반으로 분자 구조 데이터를 가져와야 합니다.
-	// 현재는 간단한 구체로 대체합니다.
+       // 현재는 Sphere를 사용한 간단한 3D 구체로 표시합니다.
 	return (
 		<ViewerContainer>
 			<Suspense fallback={<LoadingText>로딩 중...</LoadingText>}>
