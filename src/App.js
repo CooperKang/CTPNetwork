@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import ForceGraph2D from 'react-force-graph-2d';
 import CompoundViewer from './components/CompoundViewer';
@@ -30,8 +30,9 @@ const Modal = styled.div`
 const App = () => {
 	const [selectedCompound, setSelectedCompound] = useState(null);
 
-	const graphData = {
-		nodes: [
+       const graphData = useMemo(
+               () => ({
+                       nodes: [
 			{ id: 'cmp1', label: 'Dibutyl Phthalate', type: 'compound' },
 			{
 				id: 'cmp2',
@@ -59,8 +60,10 @@ const App = () => {
 			{ source: 'cmp2', target: 'APOH' },
 			{ source: 'cmp2', target: 'APOE' },
 			{ source: 'cmp2', target: 'A2M' },
-		],
-	};
+               ],
+       }),
+       []
+       );
 
 	const handleNodeClick = (node) => {
 		if (node.type === 'compound') {
