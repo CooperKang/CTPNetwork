@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import ForceGraph2D from 'react-force-graph-2d';
 import CompoundViewer from './components/CompoundViewer';
@@ -28,7 +28,20 @@ const Modal = styled.div`
 `;
 
 const App = () => {
-	const [selectedCompound, setSelectedCompound] = useState(null);
+        const [selectedCompound, setSelectedCompound] = useState(null);
+        const [width, setWidth] = useState(window.innerWidth);
+       const [height, setHeight] = useState(window.innerHeight);
+
+       useEffect(() => {
+               const handleResize = () => {
+                       setWidth(window.innerWidth);
+                       setHeight(window.innerHeight);
+               };
+               window.addEventListener('resize', handleResize);
+               return () => {
+                       window.removeEventListener('resize', handleResize);
+               };
+       }, []);
 
        const graphData = useMemo(
                () => ({
@@ -74,12 +87,14 @@ const App = () => {
 	return (
 		<AppContainer>
 			<GraphContainer>
-				<ForceGraph2D
-					graphData={graphData}
-					nodeLabel='label'
-					nodeColor={(node) =>
-						node.type === 'compound' ? '#ff6b6b' : '#4ecdc4'
-					}
+                                <ForceGraph2D
+                                        width={width}
+                                        height={height}
+                                        graphData={graphData}
+                                        nodeLabel='label'
+                                        nodeColor={(node) =>
+                                                node.type === 'compound' ? '#ff6b6b' : '#4ecdc4'
+                                        }
 					nodeRelSize={6}
 					linkColor={() => '#ffffff'}
 					onNodeClick={handleNodeClick}
